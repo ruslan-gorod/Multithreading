@@ -1,7 +1,14 @@
 package org.example;
 
+import org.example.Factorial.MyFactorial;
+
+import java.util.concurrent.ForkJoinPool;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        long n = 5;
+        ForkJoinPool pool = new ForkJoinPool();
+        Long result = pool.invoke(new MyFactorial(n));
+        System.out.println("Factorial of " + n + " = " + result);
     }
 }
