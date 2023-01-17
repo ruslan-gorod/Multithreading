@@ -4,6 +4,7 @@ import org.example.DirectoryInfo.DirectoryFileInfo;
 import org.example.Employee.Employee;
 import org.example.Employee.Helper;
 import org.example.Factorial.MyFactorial;
+import org.example.MyFork.MyFork;
 import org.example.ProducerConsumer.Consumer;
 import org.example.ProducerConsumer.Producer;
 import org.example.Quicksort.MySort;
@@ -35,13 +36,14 @@ public class Main {
         testProducerConsumerWithBlockingQueue();
         testProducerConsumerWithSemaphore();
         testFibonacciTask();
+        testSumOsSquaresInDoubleArray();
     }
 
     private static void testFactorial() {
         long n = getRandomIntValue(20);
         ForkJoinPool pool = new ForkJoinPool();
         Long result = pool.invoke(new MyFactorial(n));
-        System.out.println("Factorial of " + n + " = " + result);
+        System.out.printf("Factorial of %d = %d%n", n, result);
         printLine();
     }
 
@@ -115,7 +117,19 @@ public class Main {
         long n = getRandomIntValue(10);
         ForkJoinPool pool = new ForkJoinPool();
         Long result = pool.invoke(new FibonacciTask(n));
-        System.out.println("Fibonacci of " + n + " = " + result);
+        System.out.printf("Fibonacci of %d = %d%n", n, result);
+        printLine();
+    }
+
+    private static void testSumOsSquaresInDoubleArray() {
+        int length = 50_000_000;
+        double[] array = new double[length];
+        for (int i = 0; i < length; i++) {
+            array[i] = Math.random();
+        }
+        ForkJoinPool pool = new ForkJoinPool();
+        double sum = pool.invoke(new MyFork(array));
+        System.out.printf("Sum of double array = %s%n", sum);
         printLine();
     }
 
